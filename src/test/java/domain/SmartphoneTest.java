@@ -7,10 +7,20 @@ import static org.junit.jupiter.api.Assertions.*;
 class SmartphoneTest {
 
     @Test
-    void getCreator() {
+    public void getCreator() {
+
+        Smartphone smartphone = new Smartphone(44, "sm1", 10000, "nokia");
+        smartphone.getCreator();
+
+        assertEquals("nokia", smartphone.getCreator());
+
     }
 
     @Test
-    void setCreator() {
+    public void setCreator() {
+        Smartphone smartphone = new Smartphone(44, "sm1", 10000, "nokia");
+        smartphone.setCreator("nokia");
+
+        assertEquals("nokia", smartphone.getCreator());
     }
 }
