@@ -1,8 +1,10 @@
 package repository;
 
 import domain.Book;
+import domain.NotFoundEx;
 import domain.Product;
 import domain.Smartphone;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -93,20 +95,32 @@ class RepositoryTest {
     }
 
     @Test
-    public void removeById() {
+    public void removeById() throws NotFoundEx {
         repository.save(alpha);
         repository.save(beta);
         repository.save(gamma);
         repository.save(first);
         repository.save(second);
 
-        repository.removeById(22);
+        repository.removeById(11);
 
 
-        Product[] expected = new Product[]{alpha, gamma, first, second};
+        Product[] expected = {beta, gamma, first, second};
         Product[] actual = repository.findAll();
 
         assertArrayEquals(expected, actual);
+
+    }
+
+    @Test
+    public void removeByIdIfNotFound() {
+        repository.save(alpha);
+        repository.save(beta);
+        repository.save(gamma);
+        repository.save(first);
+        repository.save(second);
+
+        Assertions.assertThrows(NotFoundEx.class, () -> repository.removeById(66));
 
     }
 

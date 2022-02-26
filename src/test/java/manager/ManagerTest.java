@@ -1,8 +1,10 @@
 package manager;
 
 import domain.Book;
+import domain.NotFoundEx;
 import domain.Product;
 import domain.Smartphone;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import repository.Repository;
 
@@ -36,6 +38,38 @@ class ManagerTest {
 
     }
 
+    @Test
+    public void shouldRemoveById() throws NotFoundEx {
+
+        repository.save(alpha);
+        repository.save(beta);
+        repository.save(gamma);
+        repository.save(first);
+        repository.save(second);
+
+        repository.removeById(11);
+
+
+        Product[] expected = {beta, gamma, first, second};
+        Product[] actual = repository.findAll();
+
+        assertArrayEquals(expected, actual);
+
+    }
+
+    @Test
+    public void shouldRemoveByIdNotFound() {
+
+        repository.save(alpha);
+        repository.save(beta);
+        repository.save(gamma);
+        repository.save(first);
+        repository.save(second);
+
+        Assertions.assertThrows(NotFoundEx.class, () -> repository.removeById(66));
+
+    }
+
 
     @Test
     public void searchByName() {
@@ -52,6 +86,7 @@ class ManagerTest {
         assertArrayEquals(expected, actual);
 
     }
+
     @Test
     public void searchByNameIfMultipleValues() {
         repository.save(alpha);

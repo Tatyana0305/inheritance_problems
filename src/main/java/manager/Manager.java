@@ -1,5 +1,6 @@
 package manager;
 
+import domain.NotFoundEx;
 import domain.Product;
 import repository.Repository;
 
@@ -12,6 +13,10 @@ public class Manager {
         this.repository = repository;
     }
 
+    public void removeBiId(int id) throws NotFoundEx {
+        repository.removeById(id);
+        System.out.println("manager done");
+    }
 
     public void add(Product item) {
         repository.save(item);

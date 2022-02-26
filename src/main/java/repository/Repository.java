@@ -1,5 +1,6 @@
 package repository;
 
+import domain.NotFoundEx;
 import domain.Product;
 
 public class Repository {
@@ -28,19 +29,32 @@ public class Repository {
         return null;
     }
 
-    public void removeById(int id) {
+    public void removeById(int id) throws NotFoundEx {
+        if (findById(id) == null) {
+            throw new NotFoundEx("Element with id: " + id + " not found");
+
+        }
+
         int length = items.length - 1;
+
         Product[] tmp = new Product[length];
         int index = 0;
         for (Product item : items) {
+            if (findById(id) != null) ;
+
             if (item.getId() != id) {
                 tmp[index] = item;
                 index++;
             }
         }
         items = tmp;
+
     }
+
 }
+
+
+
 
 
 
